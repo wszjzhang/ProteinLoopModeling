@@ -1,0 +1,12 @@
+1,  set up data sets for tuning FastLoop 
+    (mainly (MDS + shortest path) (MDS + deep learning))
+    : 20 targets from CASP8:    
+    T0389 T0390 T0391 T0392 T0393 T0394 T0397 T0398 T0399 T0400
+    T0401 T0402 T0404 T0406 T0407 T0408 T0409 T0410 T0411 T0412
+Wed Jun 24 12:49:34 CDT 2015
+
+
+2,  change the code for reading pdb files according
+    to number of characters not columns 
+Wed Jun 24 13:22:31 CDT 2015
+

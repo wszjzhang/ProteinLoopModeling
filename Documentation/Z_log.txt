@@ -1,0 +1,25 @@
+Thu Jun  4 14:11:33 CDT 2015
+IndexError: too many indices
+readParameters(seqfile, pdbfile, lpfiles)
+49     lpcrds = []
+50     for lpfile in lpfiles:
+51         fil = open(lpfile,'r')
+52         lpcrd = np.array([line.split() for line in fil][1:-1])
+53         fil.close()
+54         lpcrds.append(lpcrd[:,6:9].astype(np.float))
+problem: 1KSI_loop45.pdb (17.701-100.931)
+solution: specify char colum number
+
+Sun Jun  7 11:41:56 CDT 2015
+mds = manifold.MDS(n_components=3, metric=False, max_iter=3000,
+        eps=1e-12, dissimilarity="euclidean", random_state=seed,
+        n_jobs=1, n_init=1)
+crd = mds.fit_transform(dm)
+
+Tue Jun 16 12:06:39 CDT 2015
+TODO_1: change the way for reading pdb to specify char position number 
+(for the problem of long x,y,z value and chain ID.)
+
+Mon Jun 22 23:38:35 CDT 2015
+TODO_2: prepare testing data sets for improving software
+TODO_3: FLMD under build_MD
