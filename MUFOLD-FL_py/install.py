@@ -1,4 +1,4 @@
-#!/usr/bin/python -tt
+#!/usr/bin/env python -tt
 
 import os
 from tempfile import mkstemp
@@ -25,7 +25,7 @@ def main():
     cwd = os.getcwd()
     replace("./generateModel.py","PULCHRA = '", "    PULCHRA = '"+cwd+"/pulchra304/bin/osx/pulchra '\n")
     replace("./getTemplate.py","DBPATH = ", "DBPATH = '"+cwd+"/FastLoopDB_NR/'\n")
-    print "Writing path in scripts"
+    print "Wrote paths in scripts"
     print "Please make sure blast is installed"
 
 if __name__ == '__main__':

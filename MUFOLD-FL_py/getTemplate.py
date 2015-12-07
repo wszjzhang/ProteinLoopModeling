@@ -1,4 +1,4 @@
-#!/usr/bin/python -tt
+#!/usr/bin/env python -tt
 # Copyright 2015 Jiong Zhang
 
 """read in the seq file 
@@ -11,7 +11,7 @@ import os
 import shutil
 import csv
 
-DBPATH = '/Volumes/JiongData/MUFOLD-FL/MUFOLD-FL0_0/FastLoopDB_NR/'
+DBPATH = '/Users/jiong/jiong/projects/5_MUFOLD-FL/MUFOLD-FL_py_skMDS/FastLoopDB_NR/'
 
 #input seqfile = 3AA+loop+3AA
 def searchDB(seqfile):
@@ -72,7 +72,7 @@ def getTemp(blastout, match_length):
         loop_cand_structure = [line for line in fil][loop_start:loop_start+match_length]
         fil.close()
 
-        print loopname
+        #print loopname
         #for lin in loop_cand_structure: print lin
         with open(loopname, 'w') as fil:
             for lin in loop_cand_structure:
