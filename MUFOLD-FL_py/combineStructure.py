@@ -35,7 +35,8 @@ def readParameters(seqfile, pdbfile, lpfiles):
     fil = open(pdbfile,'r')
     inpdb = np.array([[line[0:4],line[4:11],line[13:17],line[17:20],line[20:22],line[22:27],line[30:38],line[38:46],line[46:54]] for line in fil if 'CA' in line])
     fil.close()
-
+    
+    #full sequence file: seqfile
     fil = open(seqfile,'r')
     seq = [line for line in fil][-1]
     if not seq[-1].isalpha():

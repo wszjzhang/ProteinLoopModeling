@@ -45,12 +45,13 @@ def generate_model(pdbfile, incrd, lpcrd, loopseq, loopStart, loopEnd, target, l
 
         if savesteps:
             np.savetxt("intermediate_"+str(r)+".crd",optimized_crd)
-    
+        if r > 200:
+            optimization_done = True
     # put lpcrd in right orientation
     #transform lpcrd, fit in incomplete structure
     strCompare = incrd[loopStart-3:loopStart+3]             #anchor res: ls-3, ls-2, ls-1, ls,ls+1,ls+2
     lpCompare = np.concatenate((lpcrd[:3], lpcrd[-3:]))
-    score,xyz_tf,tf = procrustes(strCompare, lpCompare, False, False)
+    score,xyz_tf,tf = procrustes( lpCompare, strCompare, False)
     lpcrd_recon = np.mat(lpcrd)*np.mat(tf['rotation'])+np.mat(tf['translation']);
     lpcrd_recon = np.array(lpcrd_recon)
 
@@ -61,10 +62,10 @@ def generate_model(pdbfile, incrd, lpcrd, loopseq, loopStart, loopEnd, target, l
     inpdb = np.array([[line[0:4],line[4:11],line[13:17],line[17:20],line[20:22],line[22:27], line[30:38],line[38:46],line[46:54]] for line in fil if 'ATOM' in line])
     fil.close()
     resids = map(int,list(inpdb[:,5]))
+    
+    # get loop resid
     pdbStart = resids[0]
     pdbEnd   = resids[-1]
-    # read in full atom loop structure
-    # get loop resid
     loopResids = sorted(list(set(range(pdbStart,pdbEnd+1))-set(resids)))
     loopSeq = loopseq[3:-3]
 
@@ -83,14 +84,19 @@ def generate_model(pdbfile, incrd, lpcrd, loopseq, loopStart, loopEnd, target, l
     pulchracmd = PULCHRA + loopname
     os.system(pulchracmd)
     
-    ### build fullatom complete structure
+
+    ####################################################################
+    ###  combine fullatom input structure and fullatom loo structure ###
+    ####################################################################
+
+
     # read in full atom loop structure
     fil = open(target+'loop'+str(loopn)+'.rebuilt.pdb','r')
     looppdb = np.array([[line[0:4],line[4:11],line[13:17],line[17:20],line[20:22],line[22:27],line[30:38],line[38:46],line[46:54]] for line in fil if 'ATOM' in line])
     fil.close()
       
     # combine loop and input structure: write complete structure
-    name = target+'complete'+str(loopn)+'.pdb'
+    name = './complete_strs/'+target+'complete'+str(loopn)+'.pdb'
     print "writing ", name, "..."
     fil = open(name,'w')
     # structure before loop
@@ -113,6 +119,12 @@ def generate_model(pdbfile, incrd, lpcrd, loopseq, loopStart, loopEnd, target, l
         i += 1
 
     fil.close()
+
+    # record Nround
+    fil = open("optimization.log",'a')
+    fil.write("%s optimized in rounds: %d \n" % (name, r))
+    fil.close()
+
 
     # clean intermediate files
     os.remove(target+'loop'+str(loopn)+'.pdb')

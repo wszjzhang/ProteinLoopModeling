@@ -22,9 +22,12 @@ def replace(file_path, pattern, subst):
     move(abs_path, file_path)
 
 def main():
+    vmd = sys.argv[1]
     cwd = os.getcwd()
     replace("./generateModel.py","PULCHRA = '", "    PULCHRA = '"+cwd+"/pulchra304/bin/osx/pulchra '\n")
     replace("./getTemplate.py","DBPATH = ", "DBPATH = '"+cwd+"/FastLoopDB_NR/'\n")
+    replace("./FastLoopMDS.py","FL_HOME = ", "FL_HOME = '"+cwd+"'\n")
+    replace("./FastLoopMDS.py","vmd = ", "vmd = '"+vmd+"'\n")
     print "Wrote paths in scripts"
     print "Please make sure blast is installed"
 
