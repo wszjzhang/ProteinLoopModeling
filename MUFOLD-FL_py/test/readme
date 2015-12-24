@@ -1,8 +1,0 @@
-INPUT:
-structure with gap: T0625_noloop.pdb
-input pdb T0625_noloopFL.pdb (including only 1 gap)
-input sequence file: fullseq.fasta 
-loop models from database: T0625_loop.pdb-*.pdb
-
-OUTPUT:
-Aim complete structure: T0625.pdb

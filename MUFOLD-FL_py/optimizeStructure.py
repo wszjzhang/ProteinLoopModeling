@@ -12,18 +12,12 @@
 
 
 import numpy as np
-import scipy
 from scipy.spatial import distance
-
-
-from sklearn import manifold
-from sklearn.metrics import euclidean_distances
 
 
 from Dijkstra import Dijkstra
 from classicalMDS import cmdscale
 from sklearn import manifold
-import procrustes
 from procrustes import procrustes
 
 def pdb2DM(pdbfile):
@@ -45,11 +39,10 @@ def crd2DM(incrd):
     return dm
 
 
-def shortest_path(dm):
-    nCA = len(dm)
+def shortest_path(dm, lpStart, lpEnd):
     success = True
     # reassign adjacent atom pair distance bigger than 3.9 to 3.8
-    for i in range(1,nCA):
+    for i in range(lpStart,lpEnd+2):
         if dm[i-1][i] > 3.9:
             print "pair distance too big:", i, i-1, dm[i-1][i] 
             dm[i-1][i] = 3.8
@@ -62,13 +55,14 @@ def shortest_path(dm):
             success = False
 
     # reassign pair distances with shortest path
+    nCA =len (dm)
     Dijk = False
     if Dijk == False:
-        n = 1
+        n = 1  # number of dm optimization rounds
         for ni in range(n):
-            for k in range(1,nCA):
-                for i in range(1,nCA):
-                    for j in range(i+1,nCA):
+            for k in range(1,nCA):          #    k: third residue
+                for i in range(lpStart,lpEnd+1):      #    i: residue in loop region 
+                    for j in range(0,i-1)+range(i+2,nCA):#    j: distant residue to i  
                         if dm[i,j] > dm[i,k]+dm[k,j]:
                             dm[i,j] = dm[i,k]+dm[k,j];
                             dm[j,i] = dm[i,j]

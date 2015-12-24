@@ -80,7 +80,7 @@ def main():
         print "===              structure optimization done                ==="
         print "==============================================================="
         os.chdir("./complete_strs")
-        energymin = vmd+" -dispdev text -e " + FL_HOME + "/FLMD/script/mdrcharm.tcl -args " + target+'complete'+str(loopn)
+        energymin = vmd+" -dispdev text -e " + FL_HOME + "/FLMD/script/mdrcharm.tcl -args " + target+'complete'+str(loopn)+' '+str(loopStart+pdbStart)+' '+str(loopEnd+pdbStart)
         os.system(energymin)
         os.chdir("../")
     

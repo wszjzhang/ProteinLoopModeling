@@ -6,17 +6,11 @@
    version 0.1 only consider single loop in the middle of the structure
 """
     
-import sys
 import os
-import shutil
-
 
 import numpy as np
 
-
 from procrustes import procrustes
-from getTemplate import searchDB
-from getTemplate import getTemp
 
 
 def readParameters(seqfile, pdbfile, lpfiles):
@@ -56,7 +50,6 @@ def readParameters(seqfile, pdbfile, lpfiles):
 
     pdbStart = resids[0]
     pdbEnd   = resids[-1] 
-    aalength = len(seq)
     
     # loopStart 0 base from first residue in input pdb
     loopResids = sorted(list(set(range(pdbStart,pdbEnd+1))-set(resids)))
@@ -78,12 +71,6 @@ def combStructure(incrd,lpcrd,iLoopStart,iLoopEnd):
         with incomplete PDB coordinates
         and obtain complete PDB
     """
-    
-    #fit with 3 amino acids of each end
-    iOverlapStart1 = int(iLoopStart) - 3 
-    iOverlapStart2 = int(iLoopStart)  
-    iOverlapEnd1 = int(iLoopEnd) + 1 
-    iOverlapEnd2 = int(iLoopEnd) + 4 
     
     #in incrd loop nodt included, thus overlap parts are continuous in incrd
     #transform lpcrd, fit in incomplete structure

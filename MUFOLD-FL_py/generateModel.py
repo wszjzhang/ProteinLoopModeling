@@ -37,7 +37,7 @@ def generate_model(pdbfile, incrd, lpcrd, loopseq, loopStart, loopEnd, target, l
         # convert coordinates to distance matrix
         dist_matrix = crd2DM(completecrds)
         # optimize structure with shortest path and MDS
-        dist_matrix,optimization_done = shortest_path(dist_matrix)
+        dist_matrix,optimization_done = shortest_path(dist_matrix, loopStart, loopEnd)
         optimized_crd = MDSdm2crd(completecrds, dist_matrix)
 
         # update loop structure with optimized structure

@@ -1,4 +1,28 @@
-procedure functions description
+#################################################
+#    FastLoop                                   #
+#    Author: Jiong Zhang                        #
+#                                               #
+#    Version 1.0: Thu Dec 24 15:09:59 CST 2015  #
+#################################################
+
+
+
+This package requires BLAST, numpy, scikit-learn, vmd, NAMD  
+
+########################## Installation ##############################
+    1, Make sure all the pre-requisite softwares are installed.
+    2, In the folder of MUFOLD-FL_py, run ./install.py
+    3, Add the path of MUFOLD-FL_py into SHELL enviroment.
+    4, Run the command: FastLoop.py <fullsequence.fasta> <input_pdb>
+
+
+
+################# procedure functions description ####################
+
+generateLoopseq.py:
+0,  genloopseq(seqfile, pdbfile):
+        input file: full seq file, input structure pdb
+        generate loop sequence: 3AA+loop+3AA
 
 getTemplate.py:
 1,  searchDB(seqfile, loop_length): 
@@ -44,3 +68,10 @@ generateModel.py
         combine loop with input structure and optimize complete structure
         write out full atom pdb
         call pulchra to generate final structure
+
+
+FLMD: Energy minimization 
+CHARMM force field energy minimization:
+    fixed rest part and run energy minimization for 2500 steps
+
+

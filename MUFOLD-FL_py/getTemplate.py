@@ -6,9 +6,7 @@
    copy result template in right directory.
 """
 
-import sys
 import os
-import shutil
 import csv
 
 DBPATH = '/Users/jiong/jiong/projects/5_MUFOLD-FL/MUFOLD-FL_py_skMDS/FastLoopDB_NR/'
