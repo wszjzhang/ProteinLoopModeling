@@ -1,21 +1,43 @@
 #################################################
-#    FastLoop                                   #
-#    Author: Jiong Zhang                        #
+#    MUFOLD-LOOP                                #
+#    organization: University of Missouri       #
+#                  MUFOLD team mufold.org       #
 #                                               #
-#    Version 1.0: Thu Dec 24 15:09:59 CST 2015  #
+#    Version 0.0: Thu Dec 24 15:09:59 CST 2015  #
+#    Version 0.1: Sun Sep 18 15:25:54 PDT 2016  #
+#    Version 0.1.1: Sun Mar 12 23:11:02 PDT 2017#
 #################################################
 
 
+########################## Reference #################################
 
-This package requires BLAST, numpy, scikit-learn, vmd, NAMD  
+Please cite this paper:
+MUFOLD-LOOP: a new loop modeling tool for protein structures
 
 ########################## Installation ##############################
+
+    This package requires BLAST, numpy, scikit-learn, VMD, NAMD  
+    
+    Please download the latest version of NAMD from 
+        http://www.ks.uiuc.edu/Research/namd/
+    
+    For BLAST (version 2.2.30+) installation, please refer to 
+        https://www.ncbi.nlm.nih.gov/books/NBK279671/
+
     1, Make sure all the pre-requisite softwares are installed.
-    2, In the folder of MUFOLD-FL_py, run ./install.py
-    3, Add the path of MUFOLD-FL_py into SHELL enviroment.
-    4, Run the command: FastLoop.py <fullsequence.fasta> <input_pdb>
+    2, In the folder of MUFOLD-LOOP, add the paths of vmd and
+       namd in install.py and run ./install.py
+    3, Add the path of MUFOLD_LOOP into SHELL enviroment.
+    4, Run the command: MUFOLD_LOOP <fullsequence.fasta> <input_pdb>
 
+    Test MUFOLD_LOOP in the test folder, run ./runFL.sh
 
+########################## Usage #####################################
+
+    mufold_loop ./seq.fasta ./str.pdb
+    
+    You may also refer to the test folder for example of usage. 
+    Note: the current version only considers 1 gap in structure.
 
 ################# procedure functions description ####################
 
@@ -56,7 +78,7 @@ optimizeStructure.py:
         read pdb file and calculate the distance matrix
 
 9,  shortest_path(dm)
-        reassigne adjacent atom pair distances bigger than 3.9 to 3.8
+        reassign adjacent atom pair distances bigger than 3.9 to 3.8
         reassign impropriate pair distances with shortest path 
 
 10, MDSdm2crd(dm)
