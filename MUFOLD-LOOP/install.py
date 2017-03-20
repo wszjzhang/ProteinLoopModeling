@@ -1,9 +1,20 @@
 #!/usr/bin/env python -tt
+from __future__ import print_function
 
+import sys, stat
 import os
 from tempfile import mkstemp
 from shutil import move
 from os import remove, close
+
+from sys import platform
+
+############################## configuration #########################
+
+vmd_path = "/Applications/LocalApps/VMD\ 1.9.app/Contents/MacOS/startup.command"
+namd_path = "/Users/jiongz/jiong/projects/5_MUFOLD-FL/NAMD_2.12_MacOSX-x86_64-multicore"
+
+######################################################################
 
 def replace(file_path, pattern, subst):
     #Create temp file
@@ -22,14 +33,35 @@ def replace(file_path, pattern, subst):
     move(abs_path, file_path)
 
 def main():
-    vmd = sys.argv[1]
+    if len(sys.argv) != 1:
+        print("install: ./install.py ")
+        return
+
+    if platform == "linux" or platform == "linux2":
+        # linux
+        os_version = 'linux'
+    elif platform == "darwin":
+        # OS X
+        os_version = 'osx'
+    elif platform == "win32":
+        # Windows...
+        os_version = 'win32'
+
+
     cwd = os.getcwd()
-    replace("./generateModel.py","PULCHRA = '", "    PULCHRA = '"+cwd+"/pulchra304/bin/osx/pulchra '\n")
-    replace("./getTemplate.py","DBPATH = ", "DBPATH = '"+cwd+"/FastLoopDB_NR/'\n")
-    replace("./FastLoopMDS.py","FL_HOME = ", "FL_HOME = '"+cwd+"'\n")
-    replace("./FastLoopMDS.py","vmd = ", "vmd = '"+vmd+"'\n")
-    print "Wrote paths in scripts"
-    print "Please make sure blast is installed"
+    replace("./structure_generation/generateModel.py","PULCHRA = '", "    PULCHRA = '"+cwd+"/pulchra304/bin/"+os_version+"/pulchra '\n")
+    replace("./structure_generation/getTemplate.py","DBPATH = ", "DBPATH = '"+cwd+"/FastLoopDB_NR/'\n")
+
+    replace("./mufold_loop","FL_HOME = ", "FL_HOME = '"+cwd+"'\n")
+    replace("./mufold_loop","vmd = ", "vmd = '"+vmd_path+"'\n")
+
+    replace("./FLMD/script/mdrundir.sh", "set FL_HOME", "set FL_HOME = '"+cwd+"'\n")
+    replace("./FLMD/script/mdrcharm.tcl", "set maindir", 'set maindir "'+cwd+'/FLMD\n')
+    replace("./FLMD/template/job.sh", "set bindir", 'set bindir = "'+namd_path+'\n')
+
+    os.chmod("./mufold_loop", stat.S_IXUSR | stat.S_IRUSR | stat.S_IWUSR)
+    print("Wrote paths in scripts")
+    print("Please make sure blast is installed")
 
 if __name__ == '__main__':
     main()
